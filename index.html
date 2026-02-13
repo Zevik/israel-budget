@@ -1017,6 +1017,7 @@
       const tt = document.getElementById('tooltip');
       tt.style.left = (e.clientX + 14) + 'px'; tt.style.top = (e.clientY - 10) + 'px';
     }
+    function hideTT() { document.getElementById('tooltip').style.display = 'none'; }
     function syncInputs(sourceId, targetId, callback) {
       const source = document.getElementById(sourceId);
       const target = document.getElementById(targetId);
