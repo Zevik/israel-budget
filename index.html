@@ -600,6 +600,45 @@
       border-radius: 4px;
       transition: width 1s ease-out;
     }
+
+    /* Slider Styles */
+    .slider-wrap {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #334155;
+      border-radius: 3px;
+      outline: none;
+      margin: 15px 0;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #7eb8f7;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #1a1f2e;
+      box-shadow: 0 0 10px rgba(126, 184, 247, 0.4);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #7eb8f7;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #1a1f2e;
+      box-shadow: 0 0 10px rgba(126, 184, 247, 0.4);
+    }
   </style>
 </head>
 
@@ -645,7 +684,16 @@
       <div class="calc-container">
         <div class="calc-input-row">
           <label>הכנס סכום (באלפי ₪):</label>
-          <input type="number" id="calcInput" value="100" step="1" min="0" oninput="updateCalculator()">
+          <input type="number" id="calcInput" value="1000000" step="1000" min="1" max="628000000"
+            oninput="syncInputs('calcInput', 'calcSlider', updateCalculator)">
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="calcSlider" min="1" max="10000000" step="1000" value="1000000"
+            oninput="syncInputs('calcSlider', 'calcInput', updateCalculator)">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#667;">
+            <span>₪1K</span>
+            <span>₪10M (אלפים)</span>
+          </div>
         </div>
         <div class="calc-results" id="calcResults"></div>
       </div>
@@ -660,8 +708,17 @@
       <div class="tax-input-wrap">
         <label>סה"כ מסים חודשיים (משוער):</label>
         <div class="calc-input-row" style="background:transparent; padding:0;">
-          <input type="number" id="taxInput" value="3000" step="100" min="0" oninput="updatePersonalTax()">
+          <input type="number" id="taxInput" value="3000" step="100" min="0" max="100000"
+            oninput="syncInputs('taxInput', 'taxSlider', updatePersonalTax)">
           <span style="font-weight:700; color:#dde; margin-right:10px;">₪ לחודש</span>
+        </div>
+        <div class="slider-wrap" style="max-width:400px; width:100%;">
+          <input type="range" id="taxSlider" min="0" max="50000" step="100" value="3000"
+            oninput="syncInputs('taxSlider', 'taxInput', updatePersonalTax)">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#667;">
+            <span>₪0</span>
+            <span>₪50,000</span>
+          </div>
         </div>
         <p style="font-size:0.85rem; color:#888;">(= ₪<span id="annualTaxSpan">36,000</span> בשנה)</p>
       </div>
@@ -960,7 +1017,12 @@
       const tt = document.getElementById('tooltip');
       tt.style.left = (e.clientX + 14) + 'px'; tt.style.top = (e.clientY - 10) + 'px';
     }
-    function hideTT() { document.getElementById('tooltip').style.display = 'none'; }
+    function syncInputs(sourceId, targetId, callback) {
+      const source = document.getElementById(sourceId);
+      const target = document.getElementById(targetId);
+      target.value = source.value;
+      callback();
+    }
 
     window.addEventListener('load', () => { renderTreemap(); renderBars(); renderComps(); renderSpotlight(); renderPerCapita(); renderGlobal(); updateCalculator(); updatePersonalTax(); });
     window.addEventListener('resize', renderTreemap);
