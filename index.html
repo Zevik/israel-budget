@@ -262,128 +262,6 @@
       }
     }
 
-    .comp-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 14px;
-    }
-
-    .comp-card {
-      background: #232840;
-      border-radius: 10px;
-      padding: 14px;
-      border-right: 4px solid;
-      text-align: center;
-    }
-
-    .comp-ct {
-      font-size: .82rem;
-      color: #99a;
-      margin-bottom: 6px;
-    }
-
-    .comp-am {
-      font-size: 1.2rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .comp-pc {
-      font-size: .78rem;
-      color: #778;
-    }
-
-    .comp-an {
-      font-size: .8rem;
-      color: #bbc;
-      margin-top: 8px;
-      border-top: 1px solid #2a2f4e;
-      padding-top: 8px;
-      line-height: 1.4;
-    }
-
-    .spot-section {
-      background: linear-gradient(135deg, #1e1a2e, #2a1f3e);
-      border-radius: 14px;
-      padding: 18px 22px;
-      border: 1px solid #5a3a7a;
-      margin-bottom: 28px;
-    }
-
-    .spot-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #cc88ff;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #5a3a7a;
-    }
-
-    .spot-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .spot-card {
-      background: #1a1530;
-      border-radius: 10px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .spot-lbl {
-      font-size: .8rem;
-      color: #aaa;
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-
-    .spot-val {
-      font-size: 1.1rem;
-      font-weight: 800;
-    }
-
-    .spot-pct {
-      font-size: .78rem;
-      color: #778;
-      margin-top: 4px;
-    }
-
-    .vs-text {
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: #ff6688;
-      text-align: center;
-    }
-
-    .multiplier {
-      background: #12102a;
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .mult-label {
-      font-size: .82rem;
-      color: #aaa;
-      margin-bottom: 10px;
-    }
-
-    .mult-number {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #ff6688;
-    }
-
-    .mult-sub {
-      font-size: .8rem;
-      color: #778;
-      margin-top: 6px;
-    }
-
     @media (max-width: 600px) {
       body {
         padding: 12px;
@@ -406,23 +284,6 @@
         padding: 14px 16px;
       }
 
-      .spot-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .vs-text {
-        font-size: 1.2rem;
-        margin: 4px 0;
-      }
-
-      .mult-number {
-        font-size: 1.6rem;
-      }
-
-      .comp-grid {
-        grid-template-columns: 1fr;
-      }
     }
 
     .legend {
@@ -745,23 +606,15 @@
       <div class="pc-grid" id="pcGrid"></div>
     </div>
 
-    <div class="section">
-      <div class="section-title">💸 התקציב בכיס שלך — סימולציה: אם התקציב היה משכורת של ₪10,000</div>
-      <p style="font-size:0.9rem; color:#aaa; margin-bottom:16px; text-align:center; line-height:1.6;">
-        כדי להבין כמה באמת "גדול" כל סכום, דמיינו שתקציב המדינה (₪628 מיליארד) הוא משכורת חודשית של ₪10,000.<br>
-        כל סכום הופך לסכום מוחשי — שאפשר להרגיש בכיס.
-      </p>
-      <div class="comp-grid" id="compGrid"></div>
-    </div>
-
-    <div class="spot-section">
-      <div class="spot-title">⚖️ הפרדוקס: אכיפה קטנה מול בזבוז גדול</div>
-      <div class="spot-grid" id="spotGrid"></div>
-      <div class="multiplier" id="multiplier"></div>
+    <div class="analogy" style="border-color:#5a3a7a; background:linear-gradient(135deg,#1e1a2e,#2a1f3e);">
+      ⚖️ <strong style="color:#cc88ff;">פרדוקס:</strong> הבזבוז הביורוקרטי (₪15–30 מיליארד/שנה) גדול <strong style="color:#ff6688;">פי 37–75</strong> מתקציב האכיפה הכלכלית (₪2–5 מיליון לתיק).
     </div>
 
     <div class="section">
       <div class="section-title">✨ מחשבון פרספקטיבה — כמה זה "הרבה" בשביל המדינה?</div>
+      <p style="font-size:0.88rem; color:#aaa; margin-bottom:14px; text-align:center; line-height:1.5;">
+        הזיזו את הסרגל ותראו כמה הסכום באמת שווה — באחוזים, במשכורת שלכם, ובהשוואה למה שקורה בפועל.
+      </p>
       <div class="calc-container">
         <div class="calc-input-row">
           <label>הכנס סכום ב-₪:</label>
@@ -779,7 +632,13 @@
             <span>מיליארדי ₪</span>
           </div>
         </div>
+        <div id="calcAnalogy"
+          style="text-align:center; padding:12px 16px; border-radius:10px; background:#232840; margin-bottom:4px;">
+        </div>
         <div class="calc-results" id="calcResults"></div>
+        <div style="margin-top:10px; font-size:0.8rem; color:#778; text-align:center; line-height:1.5;">
+          💡 המדינה "חוסכת" מאות מיליונים באכיפה — ומבזבזת עשרות מיליארדים מבפנים.
+        </div>
       </div>
     </div>
 
@@ -920,55 +779,10 @@
       leg.innerHTML = cats.map(c => `<div class="leg-item"><div class="leg-dot" style="background:${c.c}"></div>${c.name}</div>`).join('');
     }
 
-    const comps = [
-      { t: "הונאת מע\"מ קטנה (200K)", a: 0.0002, c: "#6b7280" },
-      { t: "פרשת שחיתות גדולה (50M)", a: 0.05, c: "#f59e0b" },
-      { t: "תקציב ישיבות ודת", a: 2, c: "#ec4899" },
-      { t: "תקציב קואליציוני נוסף", a: 5, c: "#f97316" },
-      { t: "בזבוז ביורוקרטי שנתי", a: 20, c: "#ef4444" },
-      { t: "שירות חוב לאומי", a: 75, c: "#f59e0b" },
-    ];
-
-    function renderComps() {
-      const el = document.getElementById('compGrid');
-      el.innerHTML = comps.map(item => {
-        const pct = (item.a / TOTAL * 100);
-        const pctStr = pct < 0.001 ? pct.toFixed(6) : pct < 0.1 ? pct.toFixed(4) : pct.toFixed(2);
-        const analogy = (item.a / TOTAL * 10000).toFixed(2);
-        const display = item.a >= 1 ? `&#8362;${item.a}B` : `&#8362;${(item.a * 1000).toFixed(0)}M`;
-        return `<div class="comp-card" style="border-color:${item.c}">
-      <div class="comp-ct">${item.t}</div>
-      <div class="comp-am" style="color:${item.c}">${display}</div>
-      <div class="comp-pc">${pctStr}% מהתקציב</div>
-      <div class="comp-an">= להפסיד <strong style="color:${item.c}">&#8362;${analogy}</strong> מהמשכורת שלך</div>
-    </div>`;
-      }).join('');
-    }
-
-    function renderSpotlight() {
-      document.getElementById('spotGrid').innerHTML = `
-    <div class="spot-card">
-      <div class="spot-lbl">💼 עלות ממוצעת של תיק אכיפה פלילי-כלכלי</div>
-      <div class="spot-val" style="color:#7eb8f7">&#8362;2–5 מיליון</div>
-      <div class="spot-pct">0.0005% מהתקציב</div>
-    </div>
-    <div class="vs-text">VS</div>
-    <div class="spot-card">
-      <div class="spot-lbl">&#128293; בזבוז ביורוקרטי ופוליטי שנתי (הערכה)</div>
-      <div class="spot-val" style="color:#ff6688">&#8362;15–30 מיליארד</div>
-      <div class="spot-pct">2.4–4.8% מהתקציב</div>
-    </div>`;
-      document.getElementById('multiplier').innerHTML = `
-    <div class="mult-label">&#128208; כמה פעמים גדול הבזבוז הפנימי מסך כל האכיפה הכלכלית השנתית?</div>
-    <div class="mult-number">× 37 עד × 75</div>
-    <div class="mult-sub">המדינה "חוסכת" מאות מיליונים באכיפה — ומבזבזת עשרות מיליארדים מבפנים</div>`;
-    }
-
     function renderPerCapita() {
       const el = document.getElementById('pcGrid');
-      // Population ~10M. Category v is in Billions.
-      // v * 1B / 10M = v * 100 NIS per person.
-      el.innerHTML = cats.map(c => `
+      const sorted = [...cats].sort((a, b) => b.v - a.v);
+      el.innerHTML = sorted.map(c => `
       <div class="pc-card" style="border-color:${c.c}">
         <div class="pc-card-val" style="color:${c.c}">₪${(c.v * 100).toLocaleString()}</div>
         <div class="pc-card-lbl">${c.name}</div>
@@ -1122,6 +936,17 @@
       updateCalculator();
     }
 
+    function getCalcAnalogy(valB) {
+      if (valB >= 75) return { text: "שירות החוב הלאומי כולו", color: "#f59e0b" };
+      if (valB >= 50) return { text: "יותר מתקציב החינוך של כל המדינה", color: "#3b82f6" };
+      if (valB >= 15) return { text: "הבזבוז הביורוקרטי השנתי (הערכה)", color: "#ef4444" };
+      if (valB >= 5) return { text: "תקציב קואליציוני נוסף שלם", color: "#f97316" };
+      if (valB >= 2) return { text: "תקציב כל הישיבות ומוסדות הדת", color: "#ec4899" };
+      if (valB >= 0.05) return { text: "פרשת שחיתות גדולה", color: "#f59e0b" };
+      if (valB >= 0.002) return { text: "עלות תיק אכיפה כלכלי אחד", color: "#7eb8f7" };
+      return { text: "הונאת מע\"מ קטנה", color: "#6b7280" };
+    }
+
     function updateCalculator() {
       const rawVal = parseFloat(document.getElementById('calcInput').value) || 1000;
       const val = rawVal / 1e9; // Convert ₪ to Billions
@@ -1129,6 +954,17 @@
       // Update Hebrew display
       const display = document.getElementById('calcAmountDisplay');
       display.textContent = formatHebrew(rawVal) + ' ' + getScaleWord(rawVal);
+
+      // Update dynamic analogy
+      const salaryAnalogy = (val / TOTAL * 10000).toFixed(val < 0.01 ? 3 : 2);
+      const context = getCalcAnalogy(val);
+      document.getElementById('calcAnalogy').innerHTML = `
+        <div style="font-size:0.95rem; color:#dde; margin-bottom:6px;">
+          💸 <strong>ממשכורת ₪10,000</strong> = להפסיד <strong style="color:#7eb8f7; font-size:1.1rem;">₪${salaryAnalogy}</strong>
+        </div>
+        <div style="font-size:0.85rem; color:${context.color};">
+          ≈ ${context.text}
+        </div>`;
 
       const res = document.getElementById('calcResults');
       const fmtPct = (v) => {
@@ -1143,7 +979,6 @@
         { lbl: "מתוך תקציב הביטחון", p: fmtPct(val / 120 * 100) },
         { lbl: "מתוך תקציב החינוך והבריאות", p: fmtPct(val / 220 * 100) },
         { lbl: "מתוך שירות החוב (ריבית)", p: fmtPct(val / 75 * 100) },
-        { lbl: "כמו להפסיד ממשכורת ₪10K", p: "₪" + (val / TOTAL * 10000).toFixed(3) }
       ];
 
       res.innerHTML = perspectives.map(p => `
@@ -1229,7 +1064,7 @@
       callback();
     }
 
-    window.addEventListener('load', () => { renderTreemap(); renderComps(); renderSpotlight(); renderPerCapita(); renderGlobal(); updateCalculator(); updatePersonalTax(); });
+    window.addEventListener('load', () => { renderTreemap(); renderPerCapita(); renderGlobal(); updateCalculator(); updatePersonalTax(); });
     window.addEventListener('resize', renderTreemap);
     window.addEventListener('keydown', e => { if (e.key === 'Escape') closeExpanded(); });
   </script>
