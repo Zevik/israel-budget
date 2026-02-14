@@ -762,8 +762,7 @@
         d.style.cssText = `left:${cell.x}px;top:${cell.y}px;width:${cell.w}px;height:${cell.h}px;background:${cell.c};`;
         if (cell.w > 55 && cell.h > 36) {
           d.innerHTML = `<div class="tm-label">${cell.name}<br><span style="font-weight:400;font-size:.85em;opacity:.85">${cell.sub}</span></div>
-        <div class="tm-pct">${pct}%</div>
-        ${cell.h > 65 ? `<div class="tm-val">&#8362;${cell.v}B</div>` : ''}`;
+        <div class="tm-pct">${pct}%</div>`;
         }
         d.addEventListener('mouseenter', e => showTT(e, cell, pct));
         d.addEventListener('mousemove', e => moveTT(e));
@@ -792,14 +791,18 @@
       document.getElementById('annualTaxSpan').innerText = annual.toLocaleString();
       const res = document.getElementById('taxResults');
 
-      res.innerHTML = [...cats].sort((a, b) => b.v - a.v).map(c => {
+      const sorted = [...cats].sort((a, b) => b.v - a.v);
+      const maxPct = (sorted[0].v / TOTAL * 100);
+
+      res.innerHTML = sorted.map(c => {
         const contrib = annual * (c.v / TOTAL);
         const pct = (c.v / TOTAL * 100).toFixed(1);
+        const barWidth = (parseFloat(pct) / maxPct * 100).toFixed(1);
         return `
         <div class="tax-row">
           <div style="width:140px; font-weight:600;">${c.name}</div>
           <div class="tax-row-bar-wrap">
-            <div class="tax-row-bar" style="width:${pct}%; background:${c.c}"></div>
+            <div class="tax-row-bar" style="width:${barWidth}%; background:${c.c}"></div>
           </div>
           <div class="tax-row-val">₪${contrib.toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
         </div>
@@ -927,14 +930,41 @@
     }
 
     function getCalcAnalogy(valB) {
-      if (valB >= 75) return { text: "שירות החוב הלאומי כולו", color: "#f59e0b" };
-      if (valB >= 50) return { text: "יותר מתקציב החינוך של כל המדינה", color: "#3b82f6" };
-      if (valB >= 15) return { text: "הבזבוז הביורוקרטי השנתי (הערכה)", color: "#ef4444" };
+      // Extreme high range
+      if (valB >= 628) return { text: "כל תקציב המדינה לשנה שלמה 🇮🇱", color: "#7eb8f7" };
+      if (valB >= 300) return { text: "כמעט מחצית מכל תקציב המדינה", color: "#ff6688" };
+      if (valB >= 150) return { text: "הוצאות החינוך והבריאות יחד לשנה שלמה", color: "#3b82f6" };
+      if (valB >= 120) return { text: "כל תקציב הביטחון (צה\"ל + משטרה)", color: "#ef4444" };
+      if (valB >= 95) return { text: "תקציב צה\"ל השנתי כולו", color: "#ef4444" };
+      if (valB >= 85) return { text: "כל תקציב החינוך של ישראל לשנה", color: "#3b82f6" };
+      if (valB >= 75) return { text: "שירות החוב הלאומי כולו (ריבית על 628 מיליארד)", color: "#f59e0b" };
+      if (valB >= 70) return { text: "הרווחה והביטוח הלאומי (קצבאות) לשנה", color: "#93c5fd" };
+      if (valB >= 65) return { text: "כל תקציב הבריאות — בתי חולים וקופות חולים", color: "#60a5fa" };
+      if (valB >= 45) return { text: "תקציב הממשל והמינהל כולו (ממשלה וכנסת)", color: "#8b5cf6" };
+      if (valB >= 40) return { text: "כל התשתיות והרכבות של המדינה", color: "#10b981" };
+      if (valB >= 28) return { text: "תקציב כל האוניברסיטאות והמכללות", color: "#06b6d4" };
+      if (valB >= 25) return { text: "תקציב המשטרה והביטחון הפנימי כולו", color: "#f87171" };
+      if (valB >= 22) return { text: "תקציב מו\"פ וחדשנות (Hi-Tech) לשנה", color: "#fb923c" };
+      if (valB >= 20) return { text: "הבזבוז הביורוקרטי השנתי (הערכה) 💸", color: "#ef4444" };
+      if (valB >= 18) return { text: "תקציב כל הישיבות ומוסדות הדת", color: "#ec4899" };
+      if (valB >= 15) return { text: "תקציב הדיור והשיכון (סבסוד דירות)", color: "#34d399" };
+      if (valB >= 12) return { text: "תקציב החקלאות והגנת הסביבה יחד", color: "#a3e635" };
+      if (valB >= 10) return { text: "10 מיליארד ₪ — כמו לבנות 20 בתי חולים גדולים", color: "#60a5fa" };
       if (valB >= 5) return { text: "תקציב קואליציוני נוסף שלם", color: "#f97316" };
-      if (valB >= 2) return { text: "תקציב כל הישיבות ומוסדות הדת", color: "#ec4899" };
-      if (valB >= 0.05) return { text: "פרשת שחיתות גדולה", color: "#f59e0b" };
-      if (valB >= 0.002) return { text: "עלות תיק אכיפה כלכלי אחד", color: "#7eb8f7" };
-      return { text: "הונאת מע\"מ קטנה", color: "#6b7280" };
+      if (valB >= 2) return { text: "2 מיליארד ₪ — כמו 4,000 דירות בתל אביב", color: "#34d399" };
+      if (valB >= 1) return { text: "מיליארד ₪ — כמו 10,000 מורים במשך שנה", color: "#3b82f6" };
+      if (valB >= 0.5) return { text: "חצי מיליארד — כמו רכבת קלה בעיר בינונית", color: "#10b981" };
+      if (valB >= 0.2) return { text: "200 מיליון — כמו בי\"ס תיכון חדש בכל עיר", color: "#3b82f6" };
+      if (valB >= 0.1) return { text: "100 מיליון — 200 אמבולנסים מצוידים", color: "#60a5fa" };
+      if (valB >= 0.05) return { text: "50 מיליון — פרשת שחיתות גדולה", color: "#f59e0b" };
+      if (valB >= 0.01) return { text: "10 מיליון — בניית גן ילדים מפואר", color: "#3b82f6" };
+      if (valB >= 0.005) return { text: "5 מיליון — תיק אכיפה כלכלי גדול", color: "#7eb8f7" };
+      if (valB >= 0.002) return { text: "2 מיליון — עלות ממוצעת של תיק אכיפה", color: "#7eb8f7" };
+      if (valB >= 0.001) return { text: "מיליון ₪ — רכב משוריין לצה\"ל", color: "#ef4444" };
+      if (valB >= 0.0005) return { text: "חצי מיליון — דירה בפריפריה", color: "#34d399" };
+      if (valB >= 0.0002) return { text: "200 אלף — הונאת מע\"מ קטנה", color: "#6b7280" };
+      if (valB >= 0.0001) return { text: "100 אלף — משכורת שנתית ממוצעת", color: "#aaa" };
+      return { text: "עשרות אלפים — דמי שכירות שנתיים", color: "#888" };
     }
 
     function updateCalculator() {
