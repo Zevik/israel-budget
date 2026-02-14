@@ -616,13 +616,9 @@
         הזיזו את הסרגל ותראו כמה הסכום באמת שווה — באחוזים, במשכורת שלכם, ובהשוואה למה שקורה בפועל.
       </p>
       <div class="calc-container">
-        <div class="calc-input-row">
-          <label>הכנס סכום ב-₪:</label>
-          <input type="number" id="calcInput" value="1000000" step="1000" min="1000" max="628000000000"
-            oninput="onCalcInput()">
-        </div>
+        <input type="hidden" id="calcInput" value="1000000">
         <div id="calcAmountDisplay"
-          style="text-align:center; font-size:1.15rem; font-weight:700; color:#7eb8f7; margin:-2px 0 8px;">
+          style="text-align:center; font-size:1.15rem; font-weight:700; color:#7eb8f7; margin-bottom:8px;">
         </div>
         <div class="slider-wrap">
           <input type="range" id="calcSlider" min="0" max="1000" step="1" value="341"
@@ -921,12 +917,6 @@
       if (n >= 10e3) return '(עשרות אלפים)';
       if (n >= 1e3) return '(אלפים)';
       return '';
-    }
-
-    function onCalcInput() {
-      const val = parseFloat(document.getElementById('calcInput').value) || 1000;
-      document.getElementById('calcSlider').value = valueToSlider(val);
-      updateCalculator();
     }
 
     function onCalcSlider() {
