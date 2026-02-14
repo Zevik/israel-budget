@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💰 הכסף שלך — פרספקטיבה אמיתית</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0f1117;
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container { width: 100%; max-width: 1000px; }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .nav a {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: 1px solid #2a2f4e;
+      background: #1a1f2e;
+      transition: background .15s, border-color .15s;
+    }
+    .nav a:hover { background: #252b3b; border-color: #7eb8f7; }
+    .nav a.active { background: #7eb8f7; color: #0f1117; border-color: #7eb8f7; }
+
+    h1 { text-align: center; font-size: 1.8rem; margin-bottom: 6px; font-weight: 700; }
+    .subtitle { text-align: center; color: #aaa; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+
+    .section {
+      background: #1a1f2e;
+      border-radius: 14px;
+      padding: 18px 22px;
+      border: 1px solid #2a2f4e;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #aab;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2a2f4e;
+    }
+
+    /* 3 Layers Visualization */
+    .layers-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .layer {
+      border-radius: 10px;
+      padding: 18px;
+      border-left: 5px solid;
+    }
+
+    .layer-foundation {
+      background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.08));
+      border-left-color: #ef4444;
+    }
+    .layer-lifestyle {
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(59,130,246,0.08));
+      border-left-color: #3b82f6;
+    }
+    .layer-leak {
+      background: linear-gradient(135deg, rgba(251,146,60,0.1), rgba(251,146,60,0.08));
+      border-left-color: #fb923c;
+    }
+
+    .layer-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .layer-desc {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .layer-insight {
+      font-size: 0.9rem;
+      color: #cde;
+      font-weight: 600;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+
+    th { background: #0f1117; padding: 10px 8px; text-align: right; font-weight: 700; color: #7eb8f7; border-bottom: 1px solid #2a2f4e; }
+    td { padding: 10px 8px; border-bottom: 1px solid #1a1f2e; color: #cde; }
+    tr:last-child td { border-bottom: none; }
+
+    /* Three Families Table */
+    .family-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.85rem;
+    }
+
+    .family-table th {
+      background: #0f1117;
+      padding: 12px 10px;
+      text-align: right;
+      font-weight: 700;
+      color: #7eb8f7;
+      border-bottom: 2px solid #2a2f4e;
+    }
+
+    .family-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #1a1f2e;
+      color: #cde;
+    }
+
+    .family-table .family-total {
+      font-weight: 700;
+      color: #fff;
+      background: rgba(126,184,247,0.1);
+      border-bottom: 2px solid #2a2f4e;
+    }
+
+    /* Paradox Section */
+    .paradox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .paradox-grid { grid-template-columns: 1fr; }
+    }
+
+    .paradox-card {
+      border-radius: 10px;
+      padding: 18px;
+      border: 1px solid;
+    }
+
+    .paradox-card.saving {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.3);
+    }
+
+    .paradox-card.losing {
+      background: rgba(239,68,68,0.08);
+      border-color: rgba(239,68,68,0.3);
+    }
+
+    .paradox-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
+    .paradox-card p { font-size: 0.82rem; color: #bbc; line-height: 1.5; margin-bottom: 6px; }
+
+    /* Cost Per Use Table */
+    .cost-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.85rem;
+    }
+
+    .cost-table th {
+      background: #0f1117;
+      padding: 10px 8px;
+      text-align: right;
+      font-weight: 700;
+      color: #7eb8f7;
+      border-bottom: 2px solid #2a2f4e;
+    }
+
+    .cost-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #1a1f2e;
+      color: #cde;
+    }
+
+    @media (max-width: 700px) {
+      .cost-table { font-size: 0.75rem; }
+      .cost-table th, .cost-table td { padding: 8px 6px; }
+    }
+
+    @media (max-width: 500px) {
+      .cost-table { font-size: 0.7rem; }
+    }
+
+    .cost-table .product { color: #fff; font-weight: 600; }
+    .cost-table .cost-bad { color: #ff6688; font-weight: 600; }
+    .cost-table .cost-good { color: #88ff88; font-weight: 600; }
+
+    /* Calculator */
+    .calc-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .calc-row {
+      background: #232840;
+      padding: 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .calc-row label { font-weight: 600; color: #dde; font-size: 0.9rem; }
+    .calc-row input, .calc-row select { background: #0f1117; border: 1px solid #3a4060; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; }
+    .calc-row input[type="number"] { width: 100px; text-align: center; }
+
+    @media (max-width: 600px) {
+      .calc-row { flex-direction: column; align-items: stretch; padding: 12px; }
+      .calc-row label { margin-bottom: 8px; }
+    }
+
+    .calc-result {
+      background: rgba(126,184,247,0.1);
+      border: 1px solid rgba(126,184,247,0.3);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      font-size: 1rem;
+      color: #7eb8f7;
+      font-weight: 700;
+    }
+
+    /* Section Note */
+    .section-note {
+      font-size: 0.85rem;
+      color: #778;
+      margin-top: 14px;
+      line-height: 1.5;
+      padding: 12px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+    }
+
+    .insight-box {
+      background: linear-gradient(135deg, rgba(126,184,247,0.1), rgba(126,184,247,0.05));
+      border-left: 4px solid #7eb8f7;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: #cde;
+      line-height: 1.6;
+    }
+
+    /* Comparison Grid */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .comparison-grid { grid-template-columns: 1fr; }
+    }
+
+    .comparison-card {
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid;
+    }
+
+    .comparison-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
+    .comparison-card ul { list-style: none; }
+    .comparison-card li { font-size: 0.82rem; color: #bbc; line-height: 1.6; margin-bottom: 6px; padding-right: 14px; }
+
+    /* International Comparison */
+    .intl-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.82rem;
+    }
+
+    .intl-table th {
+      background: #0f1117;
+      padding: 10px 8px;
+      text-align: right;
+      font-weight: 700;
+      color: #7eb8f7;
+      border-bottom: 2px solid #2a2f4e;
+    }
+
+    .intl-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #1a1f2e;
+      color: #cde;
+    }
+
+    .intl-table .metric { color: #fff; font-weight: 600; }
+    .intl-table .highlight { color: #ff6688; font-weight: 700; }
+
+    /* Utilities */
+    .text-center { text-align: center; }
+    .text-small { font-size: 0.8rem; color: #aaa; }
+    .text-highlight { color: #7eb8f7; font-weight: 600; }
+    .mt-large { margin-top: 20px; }
+
+    @media (max-width: 700px) {
+      .paradox-grid, .comparison-grid { grid-template-columns: 1fr; }
+      table, .family-table, .cost-table, .intl-table { font-size: 0.75rem; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      .subtitle { font-size: 0.85rem; }
+      .section { padding: 14px 16px; }
+      .section-title { font-size: 0.9rem; margin-bottom: 14px; }
+      .nav { gap: 8px; margin-bottom: 16px; }
+      .nav a { font-size: 0.85rem; padding: 6px 14px; }
+      .section-note { font-size: 0.8rem; }
+      .insight-box { font-size: 0.85rem; padding: 12px; }
+      .layer-name { font-size: 0.9rem; }
+      .layer-desc { font-size: 0.8rem; }
+    }
+
+    @media (max-width: 400px) {
+      h1 { font-size: 1.2rem; margin-bottom: 4px; }
+      .subtitle { font-size: 0.8rem; }
+      .section { padding: 12px 14px; margin-bottom: 20px; }
+      .nav a { font-size: 0.8rem; padding: 6px 12px; }
+      table, .family-table, .cost-table, .intl-table { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="nav">
+      <a href="index.html">תקציב המדינה</a>
+      <a href="municipality.html">העירייה שלך</a>
+      <a href="money-perspective.html" class="active">הכסף שלך</a>
+    </nav>
+
+    <!-- Section 1: Title & Opening -->
+    <h1>💰 הכסף שלך — פרספקטיבה אמיתית</h1>
+    <div class="subtitle">רוב האנשים יודעים כמה הם מרוויחים. מעטים יודעים לאן זה הולך באמת — ועוד פחות מבינים איפה הם מפסידים את המלחמה.</div>
+
+    <!-- Section 2: Three Layers -->
+    <div class="section">
+      <div class="section-title">🏗️ שלוש השכבות — איך הכסף שלך מתחלק בפועל</div>
+
+      <div class="layers-container">
+        <div class="layer layer-foundation">
+          <div class="layer-name">שכבה 1 — התשתית (40%–60% מההכנסה)</div>
+          <div class="layer-desc">ההוצאות שקשה להזיז בטווח הקצר</div>
+          <table>
+            <tr>
+              <th>הוצאה</th>
+              <th>טווח</th>
+            </tr>
+            <tr>
+              <td>דיור (משכנתא / שכירות)</td>
+              <td>30%–45%</td>
+            </tr>
+            <tr>
+              <td>מעון / צהרון / חינוך</td>
+              <td>8%–15%</td>
+            </tr>
+            <tr>
+              <td>ארנונה + חשבונות</td>
+              <td>4%–7%</td>
+            </tr>
+          </table>
+          <div class="layer-insight">📍 פה מוכרעת המלחמה — לא בסופר.</div>
+        </div>
+
+        <div class="layer layer-lifestyle">
+          <div class="layer-name">שכבה 2 — אורח החיים (20%–35% מההכנסה)</div>
+          <div class="layer-desc">פה נמצאים ההבדלים הגדולים בין המשפחות</div>
+          <table>
+            <tr>
+              <th>הוצאה</th>
+              <th>זול</th>
+              <th>יקר</th>
+            </tr>
+            <tr>
+              <td>תחבורה</td>
+              <td>₪500–1,500</td>
+              <td>₪3,500–4,500</td>
+            </tr>
+            <tr>
+              <td>מזון בבית</td>
+              <td>₪2,000–3,000</td>
+              <td>₪5,000–7,000</td>
+            </tr>
+            <tr>
+              <td>אוכל בחוץ</td>
+              <td>₪200–400</td>
+              <td>₪2,000–4,000</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="layer layer-leak">
+          <div class="layer-name">שכבה 3 — הדליפות (5%–15% מההכנסה)</div>
+          <div class="layer-desc">הכסף שנעלם בלי שהחלטת להוציא אותו</div>
+          <div style="font-size: 0.9rem; color: #cde; line-height: 1.8;">
+            <strong>💫 מינויים (נטפליקס, ענן, חדר כושר, אפליקציות)</strong><br>
+            <span style="color: #aaa;">מוות ב-1,000 חתכים קטנים — ₪400–800 בחודש</span><br><br>
+
+            <strong>⚙️ תחזוקה ובלאי (מקרר, רכב, רופא שיניים)</strong><br>
+            <span style="color: #aaa;">ההוצאה שאף פעם לא בתקציב — ₪500–1,500 בחודש</span><br><br>
+
+            <strong>🏦 עמלות ועלויות פיננסיות (ריבית, עמלות בנק)</strong><br>
+            <span style="color: #aaa;">אתה משלם בלי לקבל כלום — ₪200–400 בחודש</span>
+          </div>
+          <div class="layer-insight">🕳️ הדליפה השנתית הממוצעת: ₪14,400–28,800 בשנה</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Three Families -->
+    <div class="section">
+      <div class="section-title">🏠 שלוש משפחות, שלושה עולמות</div>
+      <div class="section-note">מבוסס על זוג + 2 ילדים. הוצאות הדיור הן ההבדל הגדול ביותר.</div>
+
+      <table class="family-table">
+        <tr>
+          <th>קטגוריה</th>
+          <th>משפחה חסכונית</th>
+          <th>משפחה ממוצעת</th>
+          <th>משפחת High-End</th>
+        </tr>
+        <tr>
+          <td><strong>דיור</strong></td>
+          <td>פריפריה / שכירות</td>
+          <td>משכנתא ממוצעת</td>
+          <td>מרכז / בית פרטי</td>
+        </tr>
+        <tr>
+          <td><strong>תחבורה</strong></td>
+          <td>רכב ישן + אוטובוס</td>
+          <td>רכב משפחתי אחד</td>
+          <td>שני רכבים חדשים</td>
+        </tr>
+        <tr>
+          <td><strong>אוכל בחוץ</strong></td>
+          <td>פעם בחודש</td>
+          <td>פעם בשבוע</td>
+          <td>וולט יומי + יוקרה</td>
+        </tr>
+        <tr>
+          <td><strong>חינוך ילדים</strong></td>
+          <td>ציבורי בלבד</td>
+          <td>ציבורי + חוג אחד</td>
+          <td>פרטי + חוגים</td>
+        </tr>
+        <tr class="family-total">
+          <td><strong>סה"כ הוצאה חודשית</strong></td>
+          <td><strong>₪10,000–14,000</strong></td>
+          <td><strong>₪18,000–25,000</strong></td>
+          <td><strong>₪35,000–60,000</strong></td>
+        </tr>
+      </table>
+
+      <div class="insight-box">
+        💡 בדיוק ההבדל בין משפחה חסכונית ל-High-End (₪25,000–46,000 בחודש, או ₪300,000–552,000 בשנה) הוא ההוצאות שרוב האנשים מנסים לחסוך מ... הקופר.
+      </div>
+    </div>
+
+    <!-- Section 4: Paradox -->
+    <div class="section">
+      <div class="section-title">⚔️ אתה נלחם בקרב הלא נכון</div>
+      <div class="section-note">איפה אנשים חוסכים ממשית מול איפה הכסף באמת הולך</div>
+
+      <div class="paradox-grid">
+        <div class="paradox-card saving">
+          <h3>✂️ איפה אנשים חוסכים:</h3>
+          <p>• קוטג' בסופר</p>
+          <p>• קפה מהבית</p>
+          <p>• בגד במבצע</p>
+          <p>• רמות הפעלה בנטפליקס</p>
+          <p style="margin-top: 10px; font-size: 0.75rem; color: #888;">ממוצע חיסכון: ₪100–300/חודש</p>
+        </div>
+
+        <div class="paradox-card losing">
+          <h3>💸 איפה הכסף באמת הולך:</h3>
+          <p>• ₪2,000/חודש יותר במשכנתא = ₪480,000 לאורך 20 שנה</p>
+          <p>• רכב בליסינג = ₪60,000–80,000 לאורך 4 שנים</p>
+          <p>• מעון פרטי במקום ציבורי = ₪40,000–60,000 לשנה</p>
+          <p style="margin-top: 10px; font-weight: 700; color: #ff6688;">הפסד אמיתי: ₪20,000–50,000/שנה</p>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        ⚡ כל ה'חיסכונות' בקוטג' לא מכסים יום אחד של טעות בתשתית. המלחמה לא היא בסופר — היא בחוזה המשכנתא, בבחירת הרכב, ובתקציב הצהרון של הילדים.
+      </div>
+    </div>
+
+    <!-- Section 5: Cost Per Use -->
+    <div class="section">
+      <div class="section-title">🔍 כמה זה באמת עולה לך — לשימוש אחד</div>
+      <div class="section-note">אנחנו רואים מחיר — לא ערך. המחיר האמיתי הוא כמה שילמת לכל שעה / יום / לילה של שימוש.</div>
+
+      <table class="cost-table">
+        <tr>
+          <th>מוצר</th>
+          <th>עלות</th>
+          <th>שימוש</th>
+          <th>מחיר ליחידה</th>
+        </tr>
+        <tr>
+          <td class="product">🛏️ מזרון איכותי</td>
+          <td>₪5,000</td>
+          <td>1,825 לילות (5 שנים)</td>
+          <td class="cost-good">₪2.7 ללילה</td>
+        </tr>
+        <tr>
+          <td class="product">🍽️ ארוחה במסעדה</td>
+          <td>₪350</td>
+          <td>שעתיים</td>
+          <td class="cost-bad">₪175 לשעה</td>
+        </tr>
+        <tr>
+          <td class="product">📱 אייפון חדש</td>
+          <td>₪4,500</td>
+          <td>4,000 שעות מסך (2 שנים)</td>
+          <td class="cost-good">₪1.1 לשעה</td>
+        </tr>
+        <tr>
+          <td class="product">🧥 מעיל איכותי</td>
+          <td>₪800</td>
+          <td>300 ימים (4 חורפים)</td>
+          <td class="cost-good">₪2.6 ליום</td>
+        </tr>
+        <tr>
+          <td class="product">🚗 רכב חדש ₪120,000</td>
+          <td>₪120,000</td>
+          <td>10 שנים / 150,000 ק"מ</td>
+          <td class="cost-good">₪0.8 לק"מ</td>
+        </tr>
+        <tr>
+          <td class="product">🍱 ארוחת וולט</td>
+          <td>₪80</td>
+          <td>30 דקות</td>
+          <td class="cost-bad">₪160 לשעה</td>
+        </tr>
+        <tr>
+          <td class="product">💪 חדר כושר (לא הולכים)</td>
+          <td>₪200/חודש</td>
+          <td>0 שימושים</td>
+          <td class="cost-bad">∞</td>
+        </tr>
+      </table>
+
+      <div class="insight-box">
+        🎯 <strong>המזרון הוא ההשקעה הזולה ביותר ביום שלך. הוולט הוא היקר.</strong> וחדר כושר שלא אתה משתמש בו? זה ההוצאה הכי מעצבנת שקיימת.
+      </div>
+    </div>
+
+    <!-- Section 6: Financial Leak Calculator -->
+    <div class="section">
+      <div class="section-title">🕳️ כמה אתה מאבד בלי לדעת — מחשבון הדלף</div>
+
+      <div class="calc-container">
+        <div class="calc-row">
+          <label>כמה מינויים דিגיטליים יש לך?</label>
+          <input type="number" id="subscriptions" value="5" min="0" max="50" oninput="updateLeak()">
+          <span id="subscriptionsResult" style="color: #ff6688; font-weight: 700;">₪250/חודש</span>
+        </div>
+
+        <div class="calc-row">
+          <label>כמה פעמים בשבוע אתה מזמין אוכל?</label>
+          <input type="number" id="deliveries" value="2" min="0" max="20" oninput="updateLeak()">
+          <span id="deliveriesResult" style="color: #ff6688; font-weight: 700;">₪640/חודש</span>
+        </div>
+
+        <div class="calc-row">
+          <label>יש לך רכב בליסינג?</label>
+          <select id="leasing" onchange="updateLeak()">
+            <option value="0">לא</option>
+            <option value="1">כן</option>
+          </select>
+          <span id="leasingResult" style="color: #7eb8f7; font-weight: 700;">₪0/חודש</span>
+        </div>
+
+        <div class="calc-result">
+          דלף שנתי משוער: <span id="totalLeak" style="color: #ff6688;">₪17,280</span> בשנה
+          <div style="color: #aaa; font-size: 0.85rem; font-weight: 400; margin-top: 6px;">זה לא חיסכון — זה כסף שכבר הרווחת ופשוט שכחת לשמור.</div>
+        </div>
+      </div>
+
+      <script>
+        function updateLeak() {
+          const subs = parseInt(document.getElementById('subscriptions').value) || 0;
+          const deliveries = parseInt(document.getElementById('deliveries').value) || 0;
+          const leasing = parseInt(document.getElementById('leasing').value) || 0;
+
+          const subsMonthly = subs * 50;
+          const deliveriesMonthly = deliveries * 4 * 80;
+          const leasingMonthly = leasing * 1500;
+
+          document.getElementById('subscriptionsResult').textContent = '₪' + subsMonthly + '/חודש';
+          document.getElementById('deliveriesResult').textContent = '₪' + deliveriesMonthly + '/חודש';
+          document.getElementById('leasingResult').textContent = '₪' + (leasingMonthly > 0 ? leasingMonthly + '/חודש' : '₪0/חודש');
+
+          const monthly = subsMonthly + deliveriesMonthly + leasingMonthly;
+          const yearly = monthly * 12;
+
+          document.getElementById('totalLeak').textContent = '₪' + yearly.toLocaleString('he-IL');
+        }
+        updateLeak();
+      </script>
+    </div>
+
+    <!-- Section 7: International Comparison -->
+    <div class="section">
+      <div class="section-title">🌍 ישראל 2026 — איפה אנחנו בעולם</div>
+
+      <table class="intl-table">
+        <tr>
+          <th>מדד</th>
+          <th>ישראל</th>
+          <th>ממוצע OECD</th>
+          <th>הערה</th>
+        </tr>
+        <tr>
+          <td class="metric">דיור כ-% מהכנסה</td>
+          <td class="highlight">35%–45%</td>
+          <td>20%–25%</td>
+          <td>אחת היקרות בעולם</td>
+        </tr>
+        <tr>
+          <td class="metric">הוצאה על מזון</td>
+          <td class="highlight">~18%</td>
+          <td>~12%</td>
+          <td>יקר ב-50% מהממוצע</td>
+        </tr>
+        <tr>
+          <td class="metric">שעות עבודה לדירה</td>
+          <td class="highlight">~120 חודש</td>
+          <td>60–80 חודש</td>
+          <td>פי 1.5–2 יותר</td>
+        </tr>
+        <tr>
+          <td class="metric">מינויים דיגיטליים</td>
+          <td>₪400–800/חודש</td>
+          <td>€100–150/חודש</td>
+          <td>דומה לאירופה</td>
+        </tr>
+      </table>
+
+      <div class="insight-box">
+        🌎 <strong>ישראלי ממוצע עובד קשה יותר מרוב העולם המערבי — ומקבל פחות בתמורה לכל שקל שהוא מוציא על דיור.</strong> זה לא סתם "יקר" — זה פער בסיסי בכוח הקנייה והשקעה בעצמי.
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid #2a2f4e; color: #777; font-size: 0.8rem; line-height: 1.6;">
+      <p>הנתונים מבוססים על סקרי למ"ס, OECD ונתוני שוק 2024–2026.</p>
+      <p>חלק מהמספרים הם הערכות לצרכי המחשה. כל הנתונים נתונים לשינוי בהתאם לתנאים ולהוצאות אישיות.</p>
+    </div>
+  </div>
+</body>
+
+</html>
