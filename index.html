@@ -814,16 +814,19 @@
       <div class="section-title">✨ מחשבון פרספקטיבה — כמה זה "הרבה" בשביל המדינה?</div>
       <div class="calc-container">
         <div class="calc-input-row">
-          <label>הכנס סכום (באלפי ₪):</label>
-          <input type="number" id="calcInput" value="1000000" step="1000" min="1" max="628000000"
-            oninput="syncInputs('calcInput', 'calcSlider', updateCalculator)">
+          <label>הכנס סכום ב-₪:</label>
+          <input type="number" id="calcInput" value="1000000" step="1000" min="1000" max="628000000000"
+            oninput="onCalcInput()">
+        </div>
+        <div id="calcAmountDisplay"
+          style="text-align:center; font-size:1.15rem; font-weight:700; color:#7eb8f7; margin:-2px 0 8px;">
         </div>
         <div class="slider-wrap">
-          <input type="range" id="calcSlider" min="1" max="10000000" step="1000" value="1000000"
-            oninput="syncInputs('calcSlider', 'calcInput', updateCalculator)">
+          <input type="range" id="calcSlider" min="0" max="1000" step="1" value="341"
+            oninput="onCalcSlider()">
           <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#667;">
-            <span>₪1K</span>
-            <span>₪10M (אלפים)</span>
+            <span>אלף ₪</span>
+            <span>מיליארדי ₪</span>
           </div>
         </div>
         <div class="calc-results" id="calcResults"></div>
@@ -1116,16 +1119,98 @@
       }).join('');
     }
 
+    // --- Calculator helpers ---
+    const CALC_MIN_LOG = 3;          // log10(1,000)
+    const CALC_MAX_LOG = 11.798;     // log10(628,000,000,000)
+    const CALC_SLIDER_MAX = 1000;
+
+    function sliderToValue(pos) {
+      const log = CALC_MIN_LOG + (pos / CALC_SLIDER_MAX) * (CALC_MAX_LOG - CALC_MIN_LOG);
+      return roundNice(Math.pow(10, log));
+    }
+
+    function valueToSlider(val) {
+      const log = Math.log10(Math.max(1000, val));
+      return Math.round(((log - CALC_MIN_LOG) / (CALC_MAX_LOG - CALC_MIN_LOG)) * CALC_SLIDER_MAX);
+    }
+
+    function roundNice(n) {
+      if (n < 10000) return Math.round(n / 1000) * 1000;
+      if (n < 100000) return Math.round(n / 5000) * 5000;
+      if (n < 1000000) return Math.round(n / 50000) * 50000;
+      if (n < 10000000) return Math.round(n / 500000) * 500000;
+      if (n < 100000000) return Math.round(n / 5000000) * 5000000;
+      if (n < 1000000000) return Math.round(n / 50000000) * 50000000;
+      if (n < 10000000000) return Math.round(n / 500000000) * 500000000;
+      return Math.round(n / 5000000000) * 5000000000;
+    }
+
+    function formatHebrew(n) {
+      if (n >= 1e9) {
+        const v = n / 1e9;
+        const vStr = v % 1 === 0 ? v.toFixed(0) : v.toFixed(1);
+        return vStr + ' מיליארד ₪';
+      }
+      if (n >= 1e6) {
+        const v = n / 1e6;
+        const vStr = v % 1 === 0 ? v.toFixed(0) : v.toFixed(1);
+        return vStr + ' מיליון ₪';
+      }
+      if (n >= 1e3) {
+        const v = n / 1e3;
+        const vStr = v % 1 === 0 ? v.toFixed(0) : v.toFixed(1);
+        return v.toLocaleString('he', {maximumFractionDigits: 0}) + ' אלף ₪';
+      }
+      return '₪' + n.toLocaleString('he');
+    }
+
+    function getScaleWord(n) {
+      if (n >= 100e9) return '(מאות מיליארדים)';
+      if (n >= 10e9) return '(עשרות מיליארדים)';
+      if (n >= 1e9) return '(מיליארדים)';
+      if (n >= 100e6) return '(מאות מיליונים)';
+      if (n >= 10e6) return '(עשרות מיליונים)';
+      if (n >= 1e6) return '(מיליונים)';
+      if (n >= 100e3) return '(מאות אלפים)';
+      if (n >= 10e3) return '(עשרות אלפים)';
+      if (n >= 1e3) return '(אלפים)';
+      return '';
+    }
+
+    function onCalcInput() {
+      const val = parseFloat(document.getElementById('calcInput').value) || 1000;
+      document.getElementById('calcSlider').value = valueToSlider(val);
+      updateCalculator();
+    }
+
+    function onCalcSlider() {
+      const pos = parseInt(document.getElementById('calcSlider').value);
+      const val = sliderToValue(pos);
+      document.getElementById('calcInput').value = val;
+      updateCalculator();
+    }
+
     function updateCalculator() {
-      const valK = parseFloat(document.getElementById('calcInput').value) || 0;
-      const val = valK / 1000000; // Convert K to Billions
+      const rawVal = parseFloat(document.getElementById('calcInput').value) || 1000;
+      const val = rawVal / 1e9; // Convert ₪ to Billions
+
+      // Update Hebrew display
+      const display = document.getElementById('calcAmountDisplay');
+      display.textContent = formatHebrew(rawVal) + ' ' + getScaleWord(rawVal);
+
       const res = document.getElementById('calcResults');
+      const fmtPct = (v) => {
+        if (v < 0.0001) return v.toFixed(7) + '%';
+        if (v < 0.01) return v.toFixed(5) + '%';
+        if (v < 1) return v.toFixed(3) + '%';
+        return v.toFixed(2) + '%';
+      };
 
       const perspectives = [
-        { lbl: "מתוך סך כל התקציב", p: (val / TOTAL * 100).toFixed(6) + "%" },
-        { lbl: "מתוך תקציב הביטחון", p: (val / 120 * 100).toFixed(5) + "%" },
-        { lbl: "מתוך תקציב החינוך והבריאות", p: (val / 220 * 100).toFixed(5) + "%" },
-        { lbl: "מתוך שירות החוב (ריבית)", p: (val / 75 * 100).toFixed(5) + "%" },
+        { lbl: "מתוך סך כל התקציב", p: fmtPct(val / TOTAL * 100) },
+        { lbl: "מתוך תקציב הביטחון", p: fmtPct(val / 120 * 100) },
+        { lbl: "מתוך תקציב החינוך והבריאות", p: fmtPct(val / 220 * 100) },
+        { lbl: "מתוך שירות החוב (ריבית)", p: fmtPct(val / 75 * 100) },
         { lbl: "כמו להפסיד ממשכורת ₪10K", p: "₪" + (val / TOTAL * 10000).toFixed(3) }
       ];
 
