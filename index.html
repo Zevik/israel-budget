@@ -583,12 +583,37 @@
       border: 2px solid #1a1f2e;
       box-shadow: 0 0 10px rgba(126, 184, 247, 0.4);
     }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .nav a {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: 1px solid #2a2f4e;
+      background: #1a1f2e;
+      transition: background .15s, border-color .15s;
+    }
+    .nav a:hover { background: #252b3b; border-color: #7eb8f7; }
+    .nav a.active { background: #7eb8f7; color: #0f1117; border-color: #7eb8f7; }
   </style>
 </head>
 
 <body>
 
   <div class="container">
+    <nav class="nav">
+      <a href="index.html" class="active">תקציב המדינה</a>
+      <a href="municipality.html">העירייה שלך</a>
+    </nav>
     <h1>📊 מפת תקציב ישראל — פרופורציות אמיתיות</h1>
     <div class="subtitle">תקציב 2024 | ₪628 מיליארד | הוצאות ממשלתיות</div>
 
