@@ -286,29 +286,6 @@
 
     }
 
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 14px;
-    }
-
-    .leg-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: .78rem;
-      color: #99a;
-    }
-
-    .leg-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-
     #tooltip {
       position: fixed;
       background: rgba(10, 12, 22, .97);
@@ -686,7 +663,7 @@
     <div class="section">
       <div class="section-title">🗺️ מפת עומק — גודל כל ריבוע = חלק יחסי מהתקציב</div>
       <div id="treemap"></div>
-      <div class="legend" id="legend"></div>
+      <!-- legend removed -->
       <div class="section-title" style="margin-top:24px; border-bottom:none; color:#7eb8f7;">👥 כמה כסף המדינה משקיעה בך <span id="pcPeriodLabel">בכל שנה</span> (לפי תחום)</div>
       <div class="pc-tabs">
         <button class="pc-tab active" onclick="switchPcTab('yearly', this)">שנתי</button>
@@ -860,8 +837,7 @@
         d.addEventListener('click', () => openExpanded(cell, pct));
         el.appendChild(d);
       });
-      const leg = document.getElementById('legend');
-      leg.innerHTML = cats.map(c => `<div class="leg-item"><div class="leg-dot" style="background:${c.c}"></div>${c.name}</div>`).join('');
+      // legend removed
     }
 
     let pcMode = 'yearly';
