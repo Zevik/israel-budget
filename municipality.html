@@ -6,7 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>העירייה: המדינה הקטנה שלך</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -19,7 +23,10 @@
       align-items: center;
     }
 
-    .container { width: 100%; max-width: 1000px; }
+    .container {
+      width: 100%;
+      max-width: 1000px;
+    }
 
     /* Nav */
     .nav {
@@ -28,6 +35,7 @@
       justify-content: center;
       margin-bottom: 22px;
     }
+
     .nav a {
       color: #7eb8f7;
       text-decoration: none;
@@ -39,11 +47,32 @@
       background: #1a1f2e;
       transition: background .15s, border-color .15s;
     }
-    .nav a:hover { background: #252b3b; border-color: #7eb8f7; }
-    .nav a.active { background: #7eb8f7; color: #0f1117; border-color: #7eb8f7; }
 
-    h1 { text-align: center; font-size: 1.8rem; margin-bottom: 6px; font-weight: 700; }
-    .subtitle { text-align: center; color: #aaa; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+    .nav a:hover {
+      background: #252b3b;
+      border-color: #7eb8f7;
+    }
+
+    .nav a.active {
+      background: #7eb8f7;
+      color: #0f1117;
+      border-color: #7eb8f7;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
 
     .analogy {
       background: linear-gradient(135deg, #1a1f2e, #252b3b);
@@ -56,7 +85,10 @@
       color: #ccd;
       line-height: 1.7;
     }
-    .analogy strong { color: #7eb8f7; }
+
+    .analogy strong {
+      color: #7eb8f7;
+    }
 
     .section {
       background: #1a1f2e;
@@ -84,8 +116,20 @@
     }
 
     /* Treemap */
-    #treemap { width: 100%; height: 380px; position: relative; border-radius: 8px; overflow: hidden; background: #12141c; }
-    @media (max-width:600px) { #treemap { height: 480px; } }
+    #treemap {
+      width: 100%;
+      height: 380px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #12141c;
+    }
+
+    @media (max-width:600px) {
+      #treemap {
+        height: 480px;
+      }
+    }
 
     .tm-cell {
       position: absolute;
@@ -101,51 +145,228 @@
       text-align: center;
       padding: 4px;
     }
-    .tm-cell:hover { filter: brightness(1.3); z-index: 10; }
-    .tm-label { font-size: clamp(.6rem, 1.3vw, .9rem); font-weight: 700; color: rgba(255,255,255,.95); text-shadow: 0 1px 3px rgba(0,0,0,.7); line-height: 1.3; }
-    .tm-pct { font-size: clamp(.65rem, 1.4vw, .95rem); font-weight: 800; color: #fff; margin-top: 3px; }
+
+    .tm-cell:hover {
+      filter: brightness(1.3);
+      z-index: 10;
+    }
+
+    .tm-label {
+      font-size: clamp(.6rem, 1.3vw, .9rem);
+      font-weight: 700;
+      color: rgba(255, 255, 255, .95);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .7);
+      line-height: 1.3;
+    }
+
+    .tm-pct {
+      font-size: clamp(.65rem, 1.4vw, .95rem);
+      font-weight: 800;
+      color: #fff;
+      margin-top: 3px;
+    }
 
     /* Tooltip */
     #tooltip {
-      position: fixed; background: rgba(10,12,22,.97); border: 1px solid #4a5080; border-radius: 10px;
-      padding: 12px 16px; font-size: .85rem; color: #dde; pointer-events: none; z-index: 1000;
-      max-width: 260px; display: none; direction: rtl;
+      position: fixed;
+      background: rgba(10, 12, 22, .97);
+      border: 1px solid #4a5080;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: .85rem;
+      color: #dde;
+      pointer-events: none;
+      z-index: 1000;
+      max-width: 260px;
+      display: none;
+      direction: rtl;
     }
-    .tt-title { font-weight: 700; font-size: .95rem; margin-bottom: 6px; }
-    .tt-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 4px; font-size: .82rem; }
-    .tt-val { color: #7eb8f7; font-weight: 600; }
+
+    .tt-title {
+      font-weight: 700;
+      font-size: .95rem;
+      margin-bottom: 6px;
+    }
+
+    .tt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 4px;
+      font-size: .82rem;
+    }
+
+    .tt-val {
+      color: #7eb8f7;
+      font-weight: 600;
+    }
 
     /* Expanded cell overlay */
-    .tm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 900; opacity: 0; transition: opacity .25s ease; cursor: pointer; display: none; }
-    .tm-overlay.active { opacity: 1; }
-    .tm-expanded {
-      position: fixed; z-index: 950; border-radius: 16px; padding: 28px 24px; display: none;
-      flex-direction: column; align-items: center; justify-content: center; text-align: center;
-      max-width: 90vw; max-height: 85vh; width: 380px; top: 50%; left: 50%;
-      transform: translate(-50%,-50%) scale(0.6); opacity: 0;
-      transition: transform .3s cubic-bezier(.17,.67,.4,1.1), opacity .25s ease;
-      pointer-events: none; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      border: 2px solid rgba(255,255,255,0.15); overflow-y: auto;
+    .tm-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 900;
+      opacity: 0;
+      transition: opacity .25s ease;
+      cursor: pointer;
+      display: none;
     }
-    .tm-expanded.active { transform: translate(-50%,-50%) scale(1); opacity: 1; pointer-events: auto; }
-    .tm-expanded .exp-close { position: absolute; top: 10px; left: 10px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .tm-expanded .exp-close:hover { background: rgba(0,0,0,0.7); }
-    .tm-expanded .exp-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,.5); margin-bottom: 4px; }
-    .tm-expanded .exp-sub { font-size: 0.95rem; color: rgba(255,255,255,.75); margin-bottom: 12px; }
-    .tm-expanded .exp-desc { font-size: 0.9rem; color: rgba(255,255,255,.85); line-height: 1.5; margin-bottom: 18px; padding: 0 8px; }
-    .tm-expanded .exp-stats { width: 100%; display: flex; flex-direction: column; gap: 10px; }
-    .tm-expanded .exp-stat-row { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.25); padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; }
-    .tm-expanded .exp-stat-label { color: rgba(255,255,255,.7); }
-    .tm-expanded .exp-stat-val { font-weight: 700; color: #fff; font-size: 1rem; }
-    @media (max-width:600px) { .tm-expanded { width: 92vw; padding: 22px 16px; } .tm-expanded .exp-name { font-size: 1.2rem; } }
 
-    .legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 14px; }
-    .leg-item { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: #99a; }
-    .leg-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    .tm-overlay.active {
+      opacity: 1;
+    }
+
+    .tm-expanded {
+      position: fixed;
+      z-index: 950;
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      max-width: 90vw;
+      max-height: 85vh;
+      width: 380px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0;
+      transition: transform .3s cubic-bezier(.17, .67, .4, 1.1), opacity .25s ease;
+      pointer-events: none;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      overflow-y: auto;
+    }
+
+    .tm-expanded.active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .tm-expanded .exp-close {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tm-expanded .exp-close:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .tm-expanded .exp-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, .5);
+      margin-bottom: 4px;
+    }
+
+    .tm-expanded .exp-sub {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, .75);
+      margin-bottom: 12px;
+    }
+
+    .tm-expanded .exp-desc {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, .85);
+      line-height: 1.5;
+      margin-bottom: 18px;
+      padding: 0 8px;
+    }
+
+    .tm-expanded .exp-stats {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tm-expanded .exp-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .tm-expanded .exp-stat-label {
+      color: rgba(255, 255, 255, .7);
+    }
+
+    .tm-expanded .exp-stat-val {
+      font-weight: 700;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    @media (max-width:600px) {
+      .tm-expanded {
+        width: 92vw;
+        padding: 22px 16px;
+      }
+
+      .tm-expanded .exp-name {
+        font-size: 1.2rem;
+      }
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .78rem;
+      color: #99a;
+    }
+
+    .leg-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
 
     /* Dual columns */
-    .dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
-    @media (max-width:600px) { .dual-grid { grid-template-columns: 1fr; } }
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width:600px) {
+      .dual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     .dual-card {
       background: #232840;
@@ -153,118 +374,384 @@
       padding: 16px;
       border-top: 3px solid;
     }
-    .dual-card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
-    .dual-card p { font-size: 0.85rem; color: #aab; line-height: 1.5; margin-bottom: 6px; }
+
+    .dual-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .dual-card p {
+      font-size: 0.85rem;
+      color: #aab;
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
 
     /* Data table */
-    .data-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
     .data-table th {
-      text-align: right; padding: 10px 12px; font-size: 0.8rem; color: #99a;
-      border-bottom: 1px solid #2a2f4e; font-weight: 600;
+      text-align: right;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: #99a;
+      border-bottom: 1px solid #2a2f4e;
+      font-weight: 600;
     }
+
     .data-table td {
-      padding: 10px 12px; font-size: 0.88rem; border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding: 10px 12px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
-    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .data-table .highlight-val { color: #7eb8f7; font-weight: 700; }
+
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .data-table .highlight-val {
+      color: #7eb8f7;
+      font-weight: 700;
+    }
 
     /* Income comparison */
-    .income-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 14px; border-radius: 10px; overflow: hidden; }
-    @media (max-width:600px) { .income-grid { grid-template-columns: 1fr; } }
-    .income-col { padding: 16px; }
-    .income-col:first-child { background: rgba(16,185,129,0.08); }
-    .income-col:last-child { background: rgba(239,68,68,0.08); }
-    .income-col-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; text-align: center; }
-    .income-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.85rem; }
-    .income-row span:last-child { font-weight: 700; }
+    .income-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 14px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    @media (max-width:600px) {
+      .income-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .income-col {
+      padding: 16px;
+    }
+
+    .income-col:first-child {
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .income-col:last-child {
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .income-col-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .income-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 0.85rem;
+    }
+
+    .income-row span:last-child {
+      font-weight: 700;
+    }
 
     /* Bomb section */
     .bomb-section {
       background: linear-gradient(135deg, #2a1520, #1a1f2e);
       border: 1px solid #7a3050;
     }
+
     .bomb-title {
-      font-size: 1rem; font-weight: 700; color: #ff6688;
-      margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #5a2040;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ff6688;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #5a2040;
     }
+
     .bomb-stat {
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-      background: rgba(255,102,136,0.08); border-radius: 10px; padding: 18px; margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: rgba(255, 102, 136, 0.08);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
-    .bomb-stat-num { font-size: 2rem; font-weight: 900; color: #ff6688; }
-    .bomb-stat-label { font-size: 0.9rem; color: #ccd; }
-    .bomb-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
-    @media (max-width:600px) { .bomb-compare { grid-template-columns: 1fr; } }
-    .bomb-card { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 14px; text-align: center; }
-    .bomb-card-val { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
-    .bomb-card-lbl { font-size: 0.8rem; color: #aaa; }
+
+    .bomb-stat-num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #ff6688;
+    }
+
+    .bomb-stat-label {
+      font-size: 0.9rem;
+      color: #ccd;
+    }
+
+    .bomb-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    @media (max-width:600px) {
+      .bomb-compare {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bomb-card {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .bomb-card-val {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .bomb-card-lbl {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
 
     /* Building incentive */
     .build-visual {
-      display: flex; justify-content: center; align-items: flex-end; gap: 30px;
-      margin: 20px 0; padding: 20px; background: #12141c; border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 30px;
+      margin: 20px 0;
+      padding: 20px;
+      background: #12141c;
+      border-radius: 10px;
     }
-    .build-item { text-align: center; }
-    .build-icon { font-size: 2.5rem; margin-bottom: 6px; display: block; }
-    .build-label { font-size: 0.78rem; color: #aaa; }
-    .build-val { font-size: 0.9rem; font-weight: 700; margin-top: 4px; }
-    .build-arrow { font-size: 1.5rem; color: #ff6688; font-weight: 900; margin-bottom: 20px; }
+
+    .build-item {
+      text-align: center;
+    }
+
+    .build-icon {
+      font-size: 2.5rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .build-label {
+      font-size: 0.78rem;
+      color: #aaa;
+    }
+
+    .build-val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .build-arrow {
+      font-size: 1.5rem;
+      color: #ff6688;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
 
     /* Paradox columns */
-    .paradox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
-    @media (max-width:600px) { .paradox-grid { grid-template-columns: 1fr; } }
-    .paradox-card { border-radius: 10px; padding: 18px; }
-    .paradox-card.strong { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); }
-    .paradox-card.weak { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); }
-    .paradox-card h3 { font-size: 0.95rem; margin-bottom: 10px; }
-    .paradox-card p { font-size: 0.82rem; color: #bbc; line-height: 1.5; margin-bottom: 6px; }
+    .paradox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width:600px) {
+      .paradox-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .paradox-card {
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .paradox-card.strong {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .paradox-card.weak {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .paradox-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .paradox-card p {
+      font-size: 0.82rem;
+      color: #bbc;
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
 
     /* Calculator */
-    .calc-container { display: flex; flex-direction: column; gap: 16px; }
+    .calc-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
     .calc-input-row {
-      display: flex; gap: 12px; align-items: center; justify-content: center;
-      background: #232840; padding: 16px; border-radius: 10px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      background: #232840;
+      padding: 16px;
+      border-radius: 10px;
     }
+
     .calc-input-row input {
-      background: #0f1117; border: 1px solid #3a4060; color: #fff;
-      padding: 10px 14px; border-radius: 6px; font-size: 1.1rem;
-      width: 120px; text-align: center; font-weight: 700;
+      background: #0f1117;
+      border: 1px solid #3a4060;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      width: 120px;
+      text-align: center;
+      font-weight: 700;
     }
-    .calc-input-row label { font-weight: 600; color: #dde; }
-    .slider-wrap { width: 100%; margin-top: 10px; }
+
+    .calc-input-row label {
+      font-weight: 600;
+      color: #dde;
+    }
+
+    .slider-wrap {
+      width: 100%;
+      margin-top: 10px;
+    }
 
     input[type="range"] {
-      -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
-      background: #334155; border-radius: 3px; outline: none; margin: 15px 0;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #334155;
+      border-radius: 3px;
+      outline: none;
+      margin: 15px 0;
     }
+
     input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none; appearance: none; width: 20px; height: 20px;
-      background: #7eb8f7; border-radius: 50%; cursor: pointer;
-      border: 2px solid #1a1f2e; box-shadow: 0 0 10px rgba(126,184,247,0.4);
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #7eb8f7;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #1a1f2e;
+      box-shadow: 0 0 10px rgba(126, 184, 247, 0.4);
     }
+
     input[type="range"]::-moz-range-thumb {
-      width: 20px; height: 20px; background: #7eb8f7; border-radius: 50%;
-      cursor: pointer; border: 2px solid #1a1f2e;
+      width: 20px;
+      height: 20px;
+      background: #7eb8f7;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #1a1f2e;
     }
 
-    .muni-results { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    .muni-results {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
     .muni-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      font-size: 0.9rem;
     }
-    .muni-row-bar-wrap { flex-grow: 1; margin: 0 15px; height: 6px; background: #0f1117; border-radius: 3px; overflow: hidden; }
-    .muni-row-bar { height: 100%; border-radius: 3px; }
-    .muni-row-val { font-weight: 700; min-width: 60px; text-align: left; }
 
-    .footnote { text-align: center; font-size: .75rem; color: #556; margin-top: 10px; line-height: 1.5; }
+    .muni-row-bar-wrap {
+      flex-grow: 1;
+      margin: 0 15px;
+      height: 6px;
+      background: #0f1117;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .muni-row-bar {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .muni-row-val {
+      font-weight: 700;
+      min-width: 60px;
+      text-align: left;
+    }
+
+    .footnote {
+      text-align: center;
+      font-size: .75rem;
+      color: #556;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
 
     @media (max-width: 600px) {
-      body { padding: 12px; }
-      h1 { font-size: 1.5rem; }
-      .subtitle { font-size: 0.85rem; }
-      .analogy { padding: 12px 16px; font-size: 0.85rem; }
-      .section { padding: 14px 16px; }
+      body {
+        padding: 12px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
+      }
+
+      .analogy {
+        padding: 12px 16px;
+        font-size: 0.85rem;
+      }
+
+      .section {
+        padding: 14px 16px;
+      }
     }
   </style>
 </head>
@@ -323,14 +810,44 @@
       <div class="section-title">🏠 ארנונה למגורים: כמה משלמים לפי עיר (דירת 80 מ"ר)</div>
       <table class="data-table">
         <thead>
-          <tr><th>עיר</th><th>₪/שנה</th><th>₪/מ"ר</th><th>הערה</th></tr>
+          <tr>
+            <th>עיר</th>
+            <th>₪/שנה</th>
+            <th>₪/מ"ר</th>
+            <th>הערה</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>תל אביב</td><td class="highlight-val">₪7,000–10,000</td><td>₪60–80</td><td style="color:#778;">ממוצע עירוני</td></tr>
-          <tr><td>ירושלים</td><td class="highlight-val">₪5,000–8,000</td><td>₪60–100</td><td style="color:#778;">מדידה "נטו-נטו"</td></tr>
-          <tr><td>חיפה</td><td class="highlight-val">₪5,000–7,000</td><td>₪60–90</td><td style="color:#778;"></td></tr>
-          <tr><td>באר שבע</td><td class="highlight-val">₪3,500–5,000</td><td>₪45–65</td><td style="color:#778;"></td></tr>
-          <tr><td>רשות פריפריאלית</td><td class="highlight-val">₪2,500–4,000</td><td>₪30–50</td><td style="color:#778;"></td></tr>
+          <tr>
+            <td>תל אביב</td>
+            <td class="highlight-val">₪7,000–10,000</td>
+            <td>₪60–80</td>
+            <td style="color:#778;">ממוצע עירוני</td>
+          </tr>
+          <tr>
+            <td>ירושלים</td>
+            <td class="highlight-val">₪5,000–8,000</td>
+            <td>₪60–100</td>
+            <td style="color:#778;">מדידה "נטו-נטו"</td>
+          </tr>
+          <tr>
+            <td>חיפה</td>
+            <td class="highlight-val">₪5,000–7,000</td>
+            <td>₪60–90</td>
+            <td style="color:#778;"></td>
+          </tr>
+          <tr>
+            <td>באר שבע</td>
+            <td class="highlight-val">₪3,500–5,000</td>
+            <td>₪45–65</td>
+            <td style="color:#778;"></td>
+          </tr>
+          <tr>
+            <td>רשות פריפריאלית</td>
+            <td class="highlight-val">₪2,500–4,000</td>
+            <td>₪30–50</td>
+            <td style="color:#778;"></td>
+          </tr>
         </tbody>
       </table>
       <div class="section-note">
@@ -343,9 +860,8 @@
     <div class="section bomb-section">
       <div class="bomb-title">💥 מי באמת מממן את העיר שלך?</div>
       <div class="bomb-stat">
-        <div>
-          <div class="bomb-stat-num">פי 5–7</div>
-          <div class="bomb-stat-label">עסקים משלמים יותר ארנונה למ"ר ממגורים</div>
+        <div class="bomb-stat-label" style="font-size: 1.1rem;">
+          עסקים משלמים יותר ארנונה למ"ר ממגורים <strong>פי 5 עד פי 7</strong>
         </div>
       </div>
       <div class="bomb-compare">
@@ -367,11 +883,15 @@
         </div>
       </div>
       <div class="dual-grid" style="margin-top:16px;">
-        <div style="font-size:0.88rem; color:#bbc; line-height:1.6; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px;">
-          עסקים כמעט לא מקבלים שירותי עיר — אין להם חינוך, רווחה, תרבות. הם משלמים <strong style="color:#ff6688;">פי 5</strong> ומממנים את כולם.
+        <div
+          style="font-size:0.88rem; color:#bbc; line-height:1.6; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px;">
+          עסקים כמעט לא מקבלים שירותי עיר — אין להם חינוך, רווחה, תרבות. הם משלמים <strong style="color:#ff6688;">פי
+            5</strong> ומממנים את כולם.
         </div>
-        <div style="font-size:0.88rem; color:#bbc; line-height:1.6; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px;">
-          לעסקים אין זכות הצבעה בבחירות לרשות — לכן <strong style="color:#ff6688;">אין להם כוח פוליטי</strong> למחות על הנטל.
+        <div
+          style="font-size:0.88rem; color:#bbc; line-height:1.6; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px;">
+          לעסקים אין זכות הצבעה בבחירות לרשות — לכן <strong style="color:#ff6688;">אין להם כוח פוליטי</strong> למחות על
+          הנטל.
         </div>
       </div>
     </div>
@@ -395,7 +915,8 @@
         </div>
       </div>
       <p style="font-size:0.88rem; color:#bbc; line-height:1.6; text-align:center;">
-        ראש עיר שצריך לבחור בין אישור שכונת מגורים לאישור אזור תעשייה — <strong style="color:#ff6688;">יעדיף תמיד תעשייה</strong>.<br>
+        ראש עיר שצריך לבחור בין אישור שכונת מגורים לאישור אזור תעשייה — <strong style="color:#ff6688;">יעדיף תמיד
+          תעשייה</strong>.<br>
         זה אחד הגורמים הנסתרים למשבר הדיור בישראל.
       </p>
       <div class="analogy" style="margin-top:14px; margin-bottom:0;">
@@ -421,11 +942,13 @@
           <p>→ <strong style="color:#ef4444;">שירות ירוד</strong></p>
         </div>
       </div>
-      <div style="margin-top:16px; background:rgba(255,255,255,0.03); padding:15px; border-radius:8px; border-right:4px solid #f59e0b;">
+      <div
+        style="margin-top:16px; background:rgba(255,255,255,0.03); padding:15px; border-radius:8px; border-right:4px solid #f59e0b;">
         <div style="font-weight:700; color:#dde; margin-bottom:5px;">ירושלים — מקרה קיצון:</div>
         <div style="font-size:0.88rem; color:#aaa; line-height:1.6;">
           גבייה בפועל — <strong style="color:#ff6688;">61.4% בלבד</strong> מהחיוב הפוטנציאלי.<br>
-          הנחות ארנונה של <strong style="color:#ff6688;">~₪950 מיליון</strong>/שנה (מוסדות דת, עמותות, סוציו-אקונומי) — כמעט זהה ל"מענק הבירה" שירושלים מקבלת מהמדינה (<strong>₪942 מיליון</strong>).<br>
+          הנחות ארנונה של <strong style="color:#ff6688;">~₪950 מיליון</strong>/שנה (מוסדות דת, עמותות, סוציו-אקונומי) —
+          כמעט זהה ל"מענק הבירה" שירושלים מקבלת מהמדינה (<strong>₪942 מיליון</strong>).<br>
           <span style="color:#f59e0b;">ירושלים מקבלת מענק מיוחד מהמדינה — ומחזירה אותו כמעט במלואו כהנחות ארנונה.</span>
         </div>
       </div>
@@ -436,7 +959,8 @@
       <div class="section-title">🔥 המאבק הפוליטי על כספי הארנונה</div>
       <p style="font-size:0.9rem; color:#bbc; line-height:1.7;">
         הממשלה ניסתה להקים <strong>"קרן ארנונה"</strong> שתעביר חלק מהכנסות הארנונה העסקית מרשויות עשירות לחלשות.
-        ת"א ורשויות חזקות אחרות <strong style="color:#ff6688;">התנגדו בחריפות</strong> — כי זה היה לוקח מהם את ה"פרה החולבת" שלהם.
+        ת"א ורשויות חזקות אחרות <strong style="color:#ff6688;">התנגדו בחריפות</strong> — כי זה היה לוקח מהם את ה"פרה
+        החולבת" שלהם.
       </p>
       <div class="analogy" style="margin-top:14px; margin-bottom:0;">
         הצעה זו ממחישה את הפרדוקס: <strong>מי שיש לו עסקים — שומר על הכסף</strong>.<br>
@@ -450,8 +974,7 @@
       <div class="calc-container">
         <div class="calc-input-row">
           <label>ארנונה שנתית ב-₪:</label>
-          <input type="number" id="muniInput" value="6000" step="500" min="0" max="50000"
-            oninput="updateMuniCalc()">
+          <input type="number" id="muniInput" value="6000" step="500" min="0" max="50000" oninput="updateMuniCalc()">
         </div>
         <div class="slider-wrap" style="max-width:500px; width:100%; margin:0 auto;">
           <input type="range" id="muniSlider" min="0" max="20000" step="250" value="6000"
@@ -612,7 +1135,7 @@
         return `<div class="muni-row">
           <div style="width:180px; font-weight:600;">${b.name}</div>
           <div class="muni-row-bar-wrap"><div class="muni-row-bar" style="width:${barW}%; background:${b.c}"></div></div>
-          <div class="muni-row-val" style="color:${b.c};">₪${amount.toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+          <div class="muni-row-val" style="color:${b.c};">₪${amount.toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
         </div>`;
       }).join('');
     }
@@ -622,4 +1145,5 @@
     window.addEventListener('keydown', e => { if (e.key === 'Escape') closeExpanded(); });
   </script>
 </body>
+
 </html>
